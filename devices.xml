@@ -2,7 +2,7 @@
 <manifest>
 <remote name="sony" fetch="https://github.com/sonyxperiadev/" />
 <project path="device/sony/sepolicy" name="device-sony-sepolicy" groups="device" remote="sony" revision="n-mr1" />
-<project path="device/sony/common" name="device-sony-common" groups="device" remote="sony" revision="n-mr1" />
+<project path="device/sony/common" name="device-sony-common" groups="device" remote="sony" revision="a757b62c026f388ef575deb5b79cfebe37cdc17f" />
 
 <!--msm8936-->
 <project path="device/sony/tulip" name="device-sony-tulip" groups="device" remote="sony" revision="n-mr1" />
@@ -11,7 +11,7 @@
 <!--msm8956-->
 <project path="device/sony/loire" name="device-sony-loire" groups="device" remote="sony" revision="n-mr1" />
 <project path="device/sony/kugo" name="device-sony-kugo" groups="device" remote="sony" revision="n-mr1" />
-<project path="device/sony/suzu" name="device-sony-suzu" groups="device" remote="sony" revision="n-mr1" />
+<project path="device/sony/suzu" name="device-sony-suzu" groups="device" remote="sony" revision="1fb3575b988f640bf6c610c5f9992c5c69bfbc1f" />
 
 <!--msm8996-->
 <project path="device/sony/tone" name="device-sony-tone" groups="device" remote="sony" revision="n-mr1" />
