@@ -10,4 +10,6 @@
 
   <remove-project name="platform/external/chromium-webview" />
   <project path="external/chromium-webview" name="LineageOS/android_external_chromium-webview" groups="pdk" remote="github" revision="cm-14.1" />  
+
+  <project path="packages/apps/Brave" name="android_apps_brave" remote="zipper" groups="pdk-fs" revision="master" />
 </manifest>
