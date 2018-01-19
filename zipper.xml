@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <remote name="github" fetch="https://github.com/" />
+  <remote name="zipper" fetch="ssh://git@github.com/zipperglobal/" />
+
+  <remove-project name="platform/build" />
+  <project path="build" name="android_platform_build" groups="pdk,tradefed" remote="zipper" revision="android-7.1.1_zipper">
+    <copyfile src="core/root.mk" dest="Makefile" />
+  </project>
 
   <remove-project name="platform/external/chromium-webview" />
-
-  <project path="external/chromium-webview" name="LineageOS/android_external_chromium-webview" groups="pdk" remote="github" revision="cm-14.1" />
-  
+  <project path="external/chromium-webview" name="LineageOS/android_external_chromium-webview" groups="pdk" remote="github" revision="cm-14.1" />  
 </manifest>
