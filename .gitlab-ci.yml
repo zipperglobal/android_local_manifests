@@ -1,0 +1,50 @@
+image: ubuntu:16.04
+
+before_script:
+  - dpkg --add-architecture i386
+  - apt-get --quiet update --yes
+  - apt-get --quiet purge --yes openjdk-\* icedtea-\* icedtea6-\*
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes openjdk-8-jdk
+  - apt-get --quiet install --yes python bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip tar unzip lib32stdc++6 lib32z1 git-core gnupg flex bison gperf build-essential zip bc curl gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+  - export USER=$(whoami)
+  - mkdir -p $PWD/android-sdk-linux/platform-tools
+  - curl https://storage.googleapis.com/git-repo-downloads/repo > $PWD/android-sdk-linux/platform-tools/repo 
+  - chmod +x $PWD/android-sdk-linux/platform-tools/repo
+stages:
+  - build
+
+build:
+  tags: 
+    - vgrade-zipper
+  stage: build
+  script:
+    - mkdir android
+    - cd android
+    - repo init -u https://android.googlesource.com/platform/manifest -b ${CI_COMMIT_REF_NAME}
+    - cd .repo
+    - git clone https://github.com/zipperglobal/android_local_manifests local_manifests -b ${CI_COMMIT_REF_NAME}
+    - cd ..
+    - repo sync  
+    - git config --global user.email "zipper_ci@gitlab.com"
+    - git config --global user.name "zipper ci"
+    - ./repo_update.sh
+    - subject='/C=US/ST=California/L=Mountain View/O=zipperglobal-ci/OU=zipperglobal-ci/CN=zipperglobal-ci/emailAddress=zipperglobal-ci@zipperglobal.com'
+    - mkdir ~/.android-certs
+    - |
+      for x in releasekey platform shared media;
+      do 
+       echo "" | ./development/tools/make_key ~/.android-certs/$x "$subject" || true
+      done
+    - cp ~/.android-certs/* build/target/product/security
+    - source build/envsetup.sh
+    - lunch aosp_f5121-userdebug
+    - make -j8
+  artifacts:
+    paths:
+    - android/out/target/product/suzu/boot.img
+    - android/out/target/product/suzu/recovery.img
+    - android/out/target/product/suzu/system.img
+    - android/out/target/product/suzu/userdata.img
