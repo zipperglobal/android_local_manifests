@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="github" fetch="https://github.com/" />
+  <remote name="zipper" fetch="https://github.com/zipperglobal/" />
+
+  <remove-project name="platform/build" />
+  <project path="build/make" name="android_platform_build" groups="pdk" remote="zipper" revision="zipper-8.1.0_r3">
+    <copyfile src="core/root.mk" dest="Makefile" />
+    <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk" />
+    <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default" />
+    <linkfile src="core" dest="build/core" />
+    <linkfile src="envsetup.sh" dest="build/envsetup.sh" />
+    <linkfile src="target" dest="build/target" />
+    <linkfile src="tools" dest="build/tools" />
+  </project>
+
+  <project path="vendor/zipperglobal" name="android_vendor_zipperglobal" remote="zipper" groups="pdk" revision="master" /> 
+  <project path="packages/apps/Brave" name="android_apps_brave" remote="zipper" groups="pdk-fs" revision="master" />
+</manifest>
+
